@@ -20,12 +20,12 @@ public class Flight {
     private LocalDateTime departues;
     private LocalDateTime arrival;
     private int seatsQuantity;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "tourist_and_their_flight",
-            joinColumns = @JoinColumn(name = "flight_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "tourist_id",referencedColumnName = "id")
-    )
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(
+//            name = "tourist_and_their_flight",
+//            joinColumns = @JoinColumn(name = "flight_id",referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "tourist_id",referencedColumnName = "id")
+//    )
     private List<Tourist> tourists;
     private BigDecimal priceOfTicket;
 

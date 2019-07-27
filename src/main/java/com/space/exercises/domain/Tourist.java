@@ -22,7 +22,7 @@ public class Tourist {
     private String country;
     private List<String> notes;
     private LocalDate birthDate;
-    @ManyToMany(mappedBy = "tourists")
+  //  @ManyToMany(mappedBy = "tourists")
     private List<Flight> flights;
 
     public Tourist(String firstname, String lastname, char male, String country, List<String> notes, LocalDate birthDate, List<Flight> flights) {

@@ -101,4 +101,6 @@ public class TouristController {
         touristService.addTourist(resultTourist);
         flightService.addFlight(resultFlight);
     }
+
+
 }

@@ -42,13 +42,14 @@ public class TouristController {
     }
 
     @DeleteMapping(value = "deleteTourist")
-    public void deleteTourist(long id) {
+    public void deleteTourist(@RequestParam long id) {
         touristService.deleteTourist(id);
     }
 
     @PostMapping(value = "addFlightToTourist")
-    public void updateTouristFlights(long touristId, long flightId) throws FlightException, NotEnoughtSeatsException, CanNotFindTouristException {
+    public void updateTouristFlights(@RequestParam long touristId,@RequestParam long flightId) throws FlightException, NotEnoughtSeatsException, CanNotFindTouristException {
         Tourist resultTourist = null;
+        Flight resultFlight = null;
         for (Tourist tourist : touristService.getAllTourists()) {
             if (tourist.getId() == touristId) {
                 resultTourist = tourist;
@@ -56,7 +57,6 @@ public class TouristController {
                 throw new CanNotFindTouristException();
             }
         }
-        Flight resultFlight = null;
         for (Flight flight : flightService.getAllFlights()) {
             if (flight.getId() == flightId) {
                 resultFlight = flight;
@@ -67,6 +67,7 @@ public class TouristController {
         if (resultFlight.getSeatsQuantity() > 0) {
             resultTourist.getFlights().add(resultFlight);
             resultFlight.setSeatsQuantity(resultFlight.getSeatsQuantity() - 1);
+            resultFlight.getTourists().add(resultTourist);
         } else {
             throw new NotEnoughtSeatsException();
         }
@@ -75,7 +76,7 @@ public class TouristController {
     }
 
     @PostMapping
-    public void deleteFlightFromTourist(long touristId, long flightId) throws FlightException, CanNotFindTouristException {
+    public void deleteFlightFromTourist(@RequestParam long touristId,@RequestParam  long flightId) throws FlightException, CanNotFindTouristException {
         Tourist resultTourist = null;
         for (Tourist tourist : touristService.getAllTourists()) {
             if (tourist.getId() == touristId) {
@@ -94,6 +95,7 @@ public class TouristController {
         }
         if (resultTourist.getFlights().contains(resultFlight)) {
             resultTourist.getFlights().remove(resultFlight);
+            resultFlight.getTourists().remove(resultTourist);
             resultFlight.setSeatsQuantity(resultFlight.getSeatsQuantity() + 1);
         } else {
             throw new FlightException();
